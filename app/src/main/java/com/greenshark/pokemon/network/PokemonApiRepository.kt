@@ -8,7 +8,7 @@ import com.greenshark.pokemon.data.PokemonApiResponse
  */
 
 class PokemonApiRepository {
-    private val api = NetworkBuilder.api
+    private val api = PokemonApiInstance.pokeonApi
 
     suspend fun getAllPokemons(): AllPokemonApiResponse? {
         val response = api.getAllPokemon()

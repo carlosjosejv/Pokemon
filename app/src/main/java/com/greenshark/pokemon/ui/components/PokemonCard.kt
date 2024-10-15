@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.greenshark.pokemon.data.Types
 import com.greenshark.pokemon.ui.theme.GrassType
 import com.greenshark.pokemon.ui.theme.PoisonType
 import com.greenshark.pokemon.ui.theme.PokemonTheme
@@ -31,7 +32,12 @@ import com.greenshark.pokemon.ui.theme.roboto
  */
 
 @Composable
-fun PokemonCard() {
+fun PokemonCard(
+    name: String = "Bulbasur",
+    order: Int = 1,
+    types: ArrayList<Types> = arrayListOf(),
+    image: String = ""
+) {
     ElevatedCard(elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)) {
         Box(
             modifier = Modifier
