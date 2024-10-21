@@ -9,7 +9,10 @@ data class PokemonApiResponse(
     val name: String,
     val order: Int,
     val sprites: Sprites,
-    val types: ArrayList<Types>
+    val types: ArrayList<Types>,
+    val stats: ArrayList<BaseStat>,
+    val height: Int,
+    val weight: Int
 )
 
 data class Sprites(val other: Other)
@@ -21,6 +24,10 @@ data class Home(@SerializedName("front_default") val frontDefault: String)
 data class Types(val slot: Int, val type: Type)
 
 data class Type(val name: String)
+
+data class BaseStat(@SerializedName("base_stat") val baseStat: Int, val stat: Stat)
+
+data class Stat(val name: String)
 
 data class AllPokemonApiResponse(
     val results: ArrayList<Pokemon>

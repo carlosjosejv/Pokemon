@@ -1,19 +1,18 @@
 package com.greenshark.pokemon.ui.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.greenshark.pokemon.R
+import com.greenshark.pokemon.ui.components.BreedingCard
 import com.greenshark.pokemon.ui.theme.ElectricType
 import com.greenshark.pokemon.ui.theme.FightingType
 import com.greenshark.pokemon.ui.theme.FireType
@@ -45,10 +45,12 @@ fun PokemonDetailsScreen() {
     LazyColumn(
         modifier = Modifier
             .padding(10.dp)
-            .fillMaxSize()
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         item {
-            Card(
+            ElevatedCard(
+                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
@@ -162,21 +164,22 @@ fun PokemonDetailsScreen() {
         }
 
         item {
-            Card(modifier = Modifier.fillMaxWidth()) {
+            ElevatedCard(
+                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Column(modifier = Modifier.padding(20.dp)) {
                     Text(text = "Breeding", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Column {
-                            Text(text = "Height")
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 20.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        BreedingCard("Height", "2.04''", "0.7 m")
 
-                            Card(
-                                border = BorderStroke(2.dp, Color.LightGray),
-                                modifier = Modifier.width(180.dp).height(40.dp)
-                            ) {
-
-                            }
-                        }
+                        BreedingCard("Weight", "1.5 lbs", "6.9 kg")
                     }
                 }
             }
