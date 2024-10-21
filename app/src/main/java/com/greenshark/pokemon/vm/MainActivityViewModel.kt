@@ -18,6 +18,8 @@ class MainActivityViewModel : ViewModel() {
     private val _pokemonList = MutableLiveData<MutableList<PokemonApiResponse>>()
     val pokemonList: LiveData<MutableList<PokemonApiResponse>> = _pokemonList
 
+    private val list: MutableList<PokemonApiResponse> = mutableListOf()
+
     fun getAllPokemons() {
         viewModelScope.launch {
             val pokemons = pokemonApiRepository.getAllPokemons()?.results
@@ -25,6 +27,7 @@ class MainActivityViewModel : ViewModel() {
                 for (n in pokemons) {
                     getPokemon(n.name)
                 }
+                _pokemonList.postValue(list)
             }
         }
     }
@@ -32,10 +35,7 @@ class MainActivityViewModel : ViewModel() {
     fun getPokemon(name: String) {
         viewModelScope.launch {
             val pokemon = pokemonApiRepository.getPokemon(name)
-            if(_pokemonList.value == null){
-                _pokemonList.postValue(mutableListOf())
-            }
-            _pokemonList.value?.add(pokemon!!)
+            list.add(pokemon!!)
         }
     }
 }

@@ -30,3 +30,6 @@ val WaterType = Color(0xFF4360ed)
 val IceType = Color(0xFF90e0ee)
 
 
+val LightGreen = Color(0xFFC2E5D8)
+
+
