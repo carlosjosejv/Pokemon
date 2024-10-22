@@ -33,9 +33,9 @@ import com.greenshark.pokemon.ui.theme.FightingType
 import com.greenshark.pokemon.ui.theme.FireType
 import com.greenshark.pokemon.ui.theme.GrassType
 import com.greenshark.pokemon.ui.theme.LightGreen
-import com.greenshark.pokemon.ui.theme.PoisonType
 import com.greenshark.pokemon.ui.theme.PokemonTheme
 import com.greenshark.pokemon.ui.theme.roboto
+import com.greenshark.pokemon.utils.PokemonDataManager
 import com.greenshark.pokemon.vm.MainActivityViewModel
 
 /**
@@ -48,6 +48,7 @@ fun PokemonDetailsScreen(
     modifier: Modifier = Modifier
 ) {
 
+    val pokemonDataManager = PokemonDataManager()
 
     val pokemon by viewModel.pokemon.observeAsState()
 
@@ -94,10 +95,16 @@ fun PokemonDetailsScreen(
 
                         Card(
                             modifier = Modifier.size(width = 80.dp, height = 25.dp),
-                            colors = CardDefaults.cardColors(GrassType)
+                            colors = CardDefaults.cardColors(
+                                pokemonDataManager.getTypeColor(
+                                    pokemon?.types?.get(
+                                        0
+                                    )?.type?.name ?: ""
+                                )
+                            )
                         ) {
                             Text(
-                                text = "Grass",
+                                text = pokemon?.types?.get(0)?.type?.name ?: "Unknown",
                                 color = Color.White,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
@@ -108,21 +115,31 @@ fun PokemonDetailsScreen(
                             )
                         }
 
-                        Card(
-                            modifier = Modifier.size(width = 80.dp, height = 25.dp),
-                            colors = CardDefaults.cardColors(PoisonType)
-                        ) {
-                            Text(
-                                text = "Poison",
-                                color = Color.White,
-                                textAlign = TextAlign.Center,
-                                fontSize = 12.sp,
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                fontFamily = roboto,
-                                fontWeight = FontWeight.Bold
-                            )
+                        //TODO add this to avoid crash
+                        if ((pokemon?.types?.size ?: 0) > 1) {
+                            Card(
+                                modifier = Modifier.size(width = 80.dp, height = 25.dp),
+                                colors = CardDefaults.cardColors(
+                                    pokemonDataManager.getTypeColor(
+                                        pokemon?.types?.get(
+                                            1
+                                        )?.type?.name ?: ""
+                                    )
+                                )
+                            ) {
+                                Text(
+                                    text = pokemon?.types?.get(1)?.type?.name ?: "Unknown",
+                                    color = Color.White,
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+                                    fontFamily = roboto,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
                         }
+
                     }
 
                 }
