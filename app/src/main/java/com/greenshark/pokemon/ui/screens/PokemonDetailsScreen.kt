@@ -1,6 +1,5 @@
 package com.greenshark.pokemon.ui.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,16 +15,18 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.greenshark.pokemon.R
+import coil.compose.AsyncImage
 import com.greenshark.pokemon.ui.components.BreedingCard
 import com.greenshark.pokemon.ui.theme.ElectricType
 import com.greenshark.pokemon.ui.theme.FightingType
@@ -35,13 +36,26 @@ import com.greenshark.pokemon.ui.theme.LightGreen
 import com.greenshark.pokemon.ui.theme.PoisonType
 import com.greenshark.pokemon.ui.theme.PokemonTheme
 import com.greenshark.pokemon.ui.theme.roboto
+import com.greenshark.pokemon.vm.MainActivityViewModel
 
 /**
  * Created by Carlos Jiménez on 15-Oct-24.
  */
 
 @Composable
-fun PokemonDetailsScreen() {
+fun PokemonDetailsScreen(
+    viewModel: MainActivityViewModel = MainActivityViewModel(),
+    modifier: Modifier = Modifier
+) {
+
+
+    val pokemon by viewModel.pokemon.observeAsState()
+
+    // Trigger the getPokemon function when this composable is first launched
+    LaunchedEffect(Unit) {
+        viewModel.getPokemon("raticate")
+    }
+
     LazyColumn(
         modifier = Modifier
             .padding(10.dp)
@@ -64,9 +78,9 @@ fun PokemonDetailsScreen() {
                 ) {
 
                     Column {
-                        Text(text = "#001", fontSize = 12.sp)
+                        Text(text = pokemon?.order.toString(), fontSize = 12.sp)
                         Text(
-                            text = "Bulbasaur",
+                            text = pokemon?.name ?: "Pokemon",
                             color = Color.Blue,
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp
@@ -153,8 +167,9 @@ fun PokemonDetailsScreen() {
 
                     }
 
-                    Image(
-                        painter = painterResource(R.drawable.bulbasur),
+                    AsyncImage(
+                        model = pokemon?.sprites?.other?.home?.frontDefault
+                            ?: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png",
                         contentDescription = "Pokemon",
                     )
                 }

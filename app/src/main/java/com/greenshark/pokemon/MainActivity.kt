@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.greenshark.pokemon.ui.screens.HomeScreen
+import com.greenshark.pokemon.ui.screens.PokemonDetailsScreen
 import com.greenshark.pokemon.ui.theme.PokemonTheme
 import com.greenshark.pokemon.vm.MainActivityViewModel
 
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PokemonTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomeScreen(viewModel, Modifier.padding(innerPadding))
+                    PokemonDetailsScreen(viewModel, Modifier.padding(innerPadding))
                 }
             }
         }
